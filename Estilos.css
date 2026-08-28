@@ -1,0 +1,566 @@
+/* =======================================================
+   SONIDO VIVO — estilos.css
+   HTML5 + CSS3 puro. Sin frameworks, sin JavaScript.
+   Enfoque mobile-first: base = 360px, luego 768px y 1280px.
+   ======================================================= */
+
+/* -------- 1. Variables de color y estilo -------- */
+:root {
+    /* Paleta inspirada en madera de instrumentos, cuero y bronce */
+    --color-primario: #7b2d26;
+    /* rojo vino / madera oscura */
+    --color-primario-oscuro: #5a1f1b;
+    --color-secundario: #d4a24e;
+    /* dorado / bronce, acabado de instrumentos */
+    --color-oscuro: #1f1a17;
+    /* casi negro, tipo escenario */
+    --color-claro: #f7f3ee;
+    /* crema, fondo principal */
+    --color-gris: #6b6b6b;
+    --color-gris-claro: #e7e1d8;
+    --color-exito: #3f7d4f;
+    --color-alerta: #b8862b;
+    --color-error: #a33a3a;
+
+    --fuente-base: "Segoe UI", Verdana, Arial, sans-serif;
+    --fuente-titulos: Georgia, "Times New Roman", serif;
+
+    --radio-borde: 10px;
+    --sombra-suave: 0 4px 14px rgba(31, 26, 23, 0.12);
+    --transicion: 0.2s ease-in-out;
+
+    --ancho-maximo: 1200px;
+}
+
+/* -------- 2. Reset básico -------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fuente-base);
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+    line-height: 1.5;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--fuente-titulos);
+    line-height: 1.2;
+}
+
+.contenedor {
+    width: 100%;
+    max-width: var(--ancho-maximo);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.titulo-seccion {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-primario-oscuro);
+}
+
+/* -------- 3. Botones -------- */
+.boton {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    border-radius: var(--radio-borde);
+    font-weight: bold;
+    text-align: center;
+    transition: transform var(--transicion), background-color var(--transicion);
+}
+
+.boton--principal {
+    background-color: var(--color-secundario);
+    color: var(--color-oscuro);
+}
+
+.boton--principal:hover {
+    background-color: #c1913f;
+    transform: translateY(-2px);
+}
+
+.boton--secundario {
+    background-color: transparent;
+    color: var(--color-claro);
+    border: 2px solid var(--color-claro);
+}
+
+.boton--secundario:hover {
+    background-color: rgba(247, 243, 238, 0.15);
+}
+
+.boton--producto {
+    width: 100%;
+    background-color: var(--color-primario);
+    color: var(--color-claro);
+    margin-top: 0.8rem;
+}
+
+.boton--producto:hover {
+    background-color: var(--color-primario-oscuro);
+}
+
+.boton--deshabilitado {
+    background-color: var(--color-gris-claro);
+    color: var(--color-gris);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* =======================================================
+   4. HEADER / NAVEGACIÓN RESPONSIVE (sin JavaScript)
+   Truco: checkbox oculto + label = menú hamburguesa con CSS puro
+   ======================================================= */
+.header {
+    background-color: var(--color-oscuro);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--sombra-suave);
+}
+
+.header__barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    position: relative;
+}
+
+.header__logo {
+    font-family: var(--fuente-titulos);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-claro);
+}
+
+.header__logo span {
+    color: var(--color-secundario);
+}
+
+/* Checkbox invisible que controla el estado abierto/cerrado */
+.header__toggle-input {
+    display: none;
+}
+
+/* Icono hamburguesa (3 barras) visible solo en móvil */
+.header__toggle-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 200;
+}
+
+.header__toggle-label span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--color-claro);
+    border-radius: 2px;
+    transition: transform var(--transicion), opacity var(--transicion);
+}
+
+/* Menú de navegación: oculto por defecto en móvil, se despliega con el checkbox */
+.header__nav {
+    order: 3;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.header__toggle-input:checked ~ .header__nav {
+    max-height: 400px;
+}
+
+.header__lista {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    gap: 0.5rem;
+}
+
+.header__lista li a {
+    display: block;
+    padding: 0.6rem 0.4rem;
+    color: var(--color-claro);
+    border-radius: 6px;
+    transition: background-color var(--transicion);
+}
+
+.header__lista li a:hover,
+.header__lista li a.activo {
+    background-color: var(--color-primario);
+}
+
+.header__cta {
+    background-color: var(--color-secundario);
+    color: var(--color-oscuro) !important;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* =======================================================
+   5. HERO
+   ======================================================= */
+.hero {
+    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-primario-oscuro) 100%);
+    color: var(--color-claro);
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.hero__contenido h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.hero__contenido p {
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+    font-size: 1rem;
+    opacity: 0.95;
+}
+
+.hero__acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+/* =======================================================
+   6. FRANJA DE INFORMACIÓN
+   ======================================================= */
+.franja-info {
+    background-color: var(--color-claro);
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-gris-claro);
+}
+
+.franja-info__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.franja-info__item h3 {
+    color: var(--color-primario);
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.franja-info__item p {
+    color: var(--color-gris);
+    font-size: 0.9rem;
+}
+
+/* =======================================================
+   7. CATEGORÍAS
+   ======================================================= */
+.categorias {
+    padding: 2.5rem 0;
+}
+
+.categorias__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.categoria-card {
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+    padding: 1.2rem 0.8rem;
+    border-radius: var(--radio-borde);
+    text-align: center;
+    font-weight: bold;
+    box-shadow: var(--sombra-suave);
+    transition: transform var(--transicion);
+}
+
+.categoria-card:hover {
+    transform: translateY(-4px);
+    background-color: var(--color-primario);
+}
+
+/* =======================================================
+   8. CATÁLOGO DE PRODUCTOS (Grid)
+   ======================================================= */
+.catalogo {
+    padding: 2.5rem 0 3rem 0;
+    background-color: #fbf9f6;
+}
+
+.catalogo__subtitulo {
+    text-align: center;
+    color: var(--color-gris);
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+}
+
+.catalogo__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.tarjeta-producto {
+    background-color: #ffffff;
+    border-radius: var(--radio-borde);
+    overflow: hidden;
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transicion);
+}
+
+.tarjeta-producto:hover {
+    transform: translateY(-5px);
+}
+
+.tarjeta-producto__img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.tarjeta-producto__cuerpo {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.etiqueta {
+    align-self: flex-start;
+    background-color: var(--color-secundario);
+    color: var(--color-oscuro);
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+}
+
+.tarjeta-producto__cuerpo h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.tarjeta-producto__marca {
+    color: var(--color-gris);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.tarjeta-producto__desc {
+    font-size: 0.9rem;
+    color: #4a4440;
+    margin-bottom: 0.8rem;
+    flex-grow: 1;
+}
+
+.tarjeta-producto__pie {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.precio {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: var(--color-primario-oscuro);
+}
+
+.disponibilidad {
+    font-size: 0.78rem;
+    font-weight: bold;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+}
+
+.disponibilidad--ok {
+    background-color: rgba(63, 125, 79, 0.15);
+    color: var(--color-exito);
+}
+
+.disponibilidad--pocas {
+    background-color: rgba(184, 134, 43, 0.18);
+    color: var(--color-alerta);
+}
+
+.disponibilidad--agotado {
+    background-color: rgba(163, 58, 58, 0.15);
+    color: var(--color-error);
+}
+
+.catalogo__mas {
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+/* =======================================================
+   9. FOOTER
+   ======================================================= */
+.footer {
+    background-color: var(--color-oscuro);
+    color: var(--color-claro);
+    padding: 2.5rem 0 1rem 0;
+}
+
+.footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer__col h3 span {
+    color: var(--color-secundario);
+}
+
+.footer__col h4 {
+    color: var(--color-secundario);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.footer__col p {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-bottom: 0.3rem;
+}
+
+.footer__copy {
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    border-top: 1px solid rgba(247, 243, 238, 0.15);
+    padding-top: 1rem;
+}
+
+/* =======================================================================
+   MEDIA QUERY 1 — TABLETA (min-width: 768px)
+   ======================================================================= */
+@media (min-width: 768px) {
+
+    .header__toggle-label {
+        display: none;
+    }
+
+    .header__nav {
+        order: 2;
+        width: auto;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .header__lista {
+        flex-direction: row;
+        align-items: center;
+        padding: 0;
+    }
+
+    .hero__contenido h1 {
+        font-size: 2.3rem;
+    }
+
+    .hero__acciones {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .franja-info__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .categorias__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .catalogo__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* =======================================================================
+   MEDIA QUERY 2 — ESCRITORIO (min-width: 1280px)
+   ======================================================================= */
+@media (min-width: 1280px) {
+
+    .hero {
+        padding: 4.5rem 0;
+    }
+
+    .hero__contenido h1 {
+        font-size: 2.8rem;
+    }
+
+    .hero__contenido p {
+        font-size: 1.1rem;
+    }
+
+    .categorias__grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .catalogo__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* =======================================================================
+   MEDIA QUERY 3 — MÓVIL PEQUEÑO (max-width: 400px)
+   Ajuste fino para el ancho mínimo requerido (360px)
+   ======================================================================= */
+@media (max-width: 400px) {
+
+    .hero__contenido h1 {
+        font-size: 1.5rem;
+    }
+
+    .categorias__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .titulo-seccion {
+        font-size: 1.35rem;
+    }
+}
