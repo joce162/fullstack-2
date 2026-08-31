@@ -24,13 +24,7 @@
     <a class="nav-link active" href="#" onclick="mostrarSeccion('catalogo')">
         <i class="bi bi-shop me-1"></i>Catálogo
     </a>
-</li>
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-   
-    </span>
+
 </button>
    <button class="btn btn-warning position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart">
     <i class="bi bi-cart-fill me-1"></i> Carrito
@@ -211,12 +205,10 @@
 
             guardarYActualizar();
 
-            // Abrir el panel desplegable del carrito automáticamente
             const bsOffcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasCart'));
             bsOffcanvas.show();
         }
 
-        // CAMBIAR CANTIDAD (+ / -)
         function cambiarCantidad(id, cambio) {
             const index = carrito.findIndex(item => item.id === id);
             if (index !== -1) {
@@ -228,36 +220,34 @@
             }
         }
 
-        // ELIMINAR ITEM
         function eliminarDelCarrito(id) {
             carrito = carrito.filter(item => item.id !== id);
             guardarYActualizar();
         }
 
-        // GUARDAR EN LOCALSTORAGE Y RE-RENDERIZAR
         function guardarYActualizar() {
             localStorage.setItem('carrito_sonidos', JSON.stringify(carrito));
             actualizarCarritoUI();
         }
 
-        // RENDERIZAR INTERFAZ DEL CARRITO
+     
         function actualizarCarritoUI() {
             const container = document.getElementById('cart-items-container');
             const totalElement = document.getElementById('cart-total-price');
             const badgeElement = document.getElementById('cart-badge');
 
-            // Cantidad total de ítems para el Badge
+          
             const totalCount = carrito.reduce((sum, item) => sum + item.cantidad, 0);
             badgeElement.textContent = totalCount;
 
-            // Si está vacío
+         
             if (carrito.length === 0) {
                 container.innerHTML = `<p class="text-center text-muted mt-4">Tu carrito está vacío</p>`;
                 totalElement.textContent = '$0.00';
                 return;
             }
 
-            // Si hay ítems
+          
             let html = '';
             let total = 0;
 
@@ -290,7 +280,6 @@
             totalElement.textContent = `$${total.toFixed(2)}`;
         }
 
-        // NAVEGACIÓN ENTRE VISTAS (PÁGINA PRINCIPAL / CHECKOUT)
         function mostrarSeccion(seccion) {
             if (seccion === 'catalogo') {
                 document.getElementById('seccion-catalogo').style.display = 'block';
@@ -307,7 +296,7 @@
         }
 
         function irAProcesarCompra() {
-            // Cerrar el offcanvas antes de cambiar de sección
+        
             const offcanvasEl = document.getElementById('offcanvasCart');
             const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
             if (bsOffcanvas) {
@@ -341,7 +330,7 @@
             checkoutTotal.textContent = `$${total.toFixed(2)}`;
         }
 
-        // ENVÍO DE FORMULARIO DE COMPRA
+       
         document.getElementById('form-checkout').addEventListener('submit', (e) => {
             e.preventDefault();
             alert('¡Gracias por tu compra en Sonidos Vergatarios! Nos pondremos en contacto contigo.');
