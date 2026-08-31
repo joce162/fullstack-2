@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <!--PIE DE PAGINA DE TIENDA DE SONIDO-->
     <title>Sonidos Vergatarios | los mejores instrumentos musicales vos sabeis</title>
 </head>
@@ -118,7 +118,7 @@
             <div class="card h-100">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3haTN4ptwWbM37zd309heh4iiNSJJeYgt8-gehvDUww&s=10" class="card-img-top" alt="Producto">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+                    <h5 class="card-title">piano electrico</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
                    
                       <span class="h5 mb-0 text-success">$250.00</span>
@@ -133,7 +133,7 @@
             <div class="card h-100">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-DZBuB1ZcyCaRqtX3OoIiAlgonczJmN9zVP7trR7i3w&s=10" class="card-img-top" alt="Producto">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+                    <h5 class="card-title">guitarra electrica</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
                      <span class="h5 mb-0 text-success">$250.00</span>
     <button class="btn btn-primary" onclick="agregarAlCarrito(1, 'Guitarra Acústica', 250, 'https://...')">
@@ -143,9 +143,21 @@
         </div>
 <div class="col-12 col-md-4">
             <div class="card h-100">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-DZBuB1ZcyCaRqtX3OoIiAlgonczJmN9zVP7trR7i3w&s=10" class="card-img-top" alt="Producto">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnTvGHZ7_LfwzY_xUG4nwVV2-ikNoftSy0NVQx4VTwnA&s=10" class="card-img-top" alt="Producto">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+                    <h5 class="card-title">bateria electrica</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                     <span class="h5 mb-0 text-success">$250.00</span>
+    <button class="btn btn-primary" onclick="agregarAlCarrito(1, 'Guitarra Acústica', 250, 'https://...')">
+        <i class="bi bi-cart-plus me-1"></i>Agregar
+                </div>
+    </div>
+</div>
+<div class="col-12 col-md-4">
+            <div class="card h-100">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfTlGN4NtIDCACEICvnVC_u2XVPfgt7_NRzdrOdAWdoA&s=10" class="card-img-top" alt="Producto">
+                <div class="card-body">
+                    <h5 class="card-title">trompeta</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
                      <span class="h5 mb-0 text-success">$250.00</span>
     <button class="btn btn-primary" onclick="agregarAlCarrito(1, 'Guitarra Acústica', 250, 'https://...')">
@@ -178,6 +190,166 @@
     </div>
 </div>
 <footer class="bg-dark text-white pt-5 pb-4 mt-auto">
+  <script>
+        // Cargar productos previos desde LocalStorage si existen
+        let carrito = JSON.parse(localStorage.getItem('carrito_sonidos')) || [];
+
+        // Inicializar vista al cargar el documento
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarCarritoUI();
+        });
+
+        // AGREGAR PRODUCTO AL CARRITO
+        function agregarAlCarrito(id, nombre, precio, imagen) {
+            const index = carrito.findIndex(item => item.id === id);
+
+            if (index !== -1) {
+                carrito[index].cantidad++;
+            } else {
+                carrito.push({ id, nombre, precio, imagen, cantidad: 1 });
+            }
+
+            guardarYActualizar();
+
+            // Abrir el panel desplegable del carrito automáticamente
+            const bsOffcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasCart'));
+            bsOffcanvas.show();
+        }
+
+        // CAMBIAR CANTIDAD (+ / -)
+        function cambiarCantidad(id, cambio) {
+            const index = carrito.findIndex(item => item.id === id);
+            if (index !== -1) {
+                carrito[index].cantidad += cambio;
+                if (carrito[index].cantidad <= 0) {
+                    carrito.splice(index, 1);
+                }
+                guardarYActualizar();
+            }
+        }
+
+        // ELIMINAR ITEM
+        function eliminarDelCarrito(id) {
+            carrito = carrito.filter(item => item.id !== id);
+            guardarYActualizar();
+        }
+
+        // GUARDAR EN LOCALSTORAGE Y RE-RENDERIZAR
+        function guardarYActualizar() {
+            localStorage.setItem('carrito_sonidos', JSON.stringify(carrito));
+            actualizarCarritoUI();
+        }
+
+        // RENDERIZAR INTERFAZ DEL CARRITO
+        function actualizarCarritoUI() {
+            const container = document.getElementById('cart-items-container');
+            const totalElement = document.getElementById('cart-total-price');
+            const badgeElement = document.getElementById('cart-badge');
+
+            // Cantidad total de ítems para el Badge
+            const totalCount = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            badgeElement.textContent = totalCount;
+
+            // Si está vacío
+            if (carrito.length === 0) {
+                container.innerHTML = `<p class="text-center text-muted mt-4">Tu carrito está vacío</p>`;
+                totalElement.textContent = '$0.00';
+                return;
+            }
+
+            // Si hay ítems
+            let html = '';
+            let total = 0;
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+
+                html += `
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="card-body p-2 d-flex align-items-center">
+                            <img src="${item.imagen}" class="rounded me-2" style="width: 50px; height: 50px; object-fit: cover;">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 text-truncate" style="max-width: 140px;">${item.nombre}</h6>
+                                <small class="text-success font-weight-bold">$${item.precio.toFixed(2)}</small>
+                            </div>
+                            <div class="d-flex align-items-center me-2">
+                                <button class="btn btn-sm btn-outline-secondary px-2" onclick="cambiarCantidad(${item.id}, -1)">-</button>
+                                <span class="mx-2 fw-bold">${item.cantidad}</span>
+                                <button class="btn btn-sm btn-outline-secondary px-2" onclick="cambiarCantidad(${item.id}, 1)">+</button>
+                            </div>
+                            <button class="btn btn-sm btn-outline-danger" onclick="eliminarDelCarrito(${item.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            totalElement.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // NAVEGACIÓN ENTRE VISTAS (PÁGINA PRINCIPAL / CHECKOUT)
+        function mostrarSeccion(seccion) {
+            if (seccion === 'catalogo') {
+                document.getElementById('seccion-catalogo').style.display = 'block';
+                document.getElementById('seccion-checkout').style.display = 'none';
+            } else if (seccion === 'checkout') {
+                if (carrito.length === 0) {
+                    alert('Agrega al menos un producto antes de proceder al pago.');
+                    return;
+                }
+                document.getElementById('seccion-catalogo').style.display = 'none';
+                document.getElementById('seccion-checkout').style.display = 'block';
+                renderizarResumenCheckout();
+            }
+        }
+
+        function irAProcesarCompra() {
+            // Cerrar el offcanvas antes de cambiar de sección
+            const offcanvasEl = document.getElementById('offcanvasCart');
+            const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+            if (bsOffcanvas) {
+                bsOffcanvas.hide();
+            }
+            mostrarSeccion('checkout');
+        }
+
+        function renderizarResumenCheckout() {
+            const checkoutList = document.getElementById('checkout-summary-list');
+            const checkoutTotal = document.getElementById('checkout-total');
+            let total = 0;
+            let html = '<ul class="list-group list-group-flush">';
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                html += `
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <div>
+                            <strong>${item.nombre}</strong> <br>
+                            <small class="text-muted">Cantidad: ${item.cantidad} x $${item.precio.toFixed(2)}</small>
+                        </div>
+                        <span class="fw-bold">$${subtotal.toFixed(2)}</span>
+                    </li>
+                `;
+            });
+
+            html += '</ul>';
+            checkoutList.innerHTML = html;
+            checkoutTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // ENVÍO DE FORMULARIO DE COMPRA
+        document.getElementById('form-checkout').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('¡Gracias por tu compra en Sonidos Vergatarios! Nos pondremos en contacto contigo.');
+            carrito = [];
+            guardarYActualizar();
+            mostrarSeccion('catalogo');
+        });
+    </script>
   <div class="container text-center text-md-start">
     <div class="row text-center text-md-start">
 
