@@ -20,10 +20,22 @@
 
     <main>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <li class="nav-item">
+    <a class="nav-link active" href="#" onclick="mostrarSeccion('catalogo')">
+        <i class="bi bi-shop me-1"></i>Catálogo
+    </a>
+</li>
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
+   
+    </span>
+</button>
+   <button class="btn btn-warning position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart">
+    <i class="bi bi-cart-fill me-1"></i> Carrito
+    <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        0
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -90,7 +102,12 @@
                 <div class="card-body">
                     <h5 class="card-title">Guitarra acustica</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="d-flex justify-content-between align-items-center">
+    <span class="h5 mb-0 text-success">$250.00</span>
+    <button class="btn btn-primary" onclick="agregarAlCarrito(1, 'Guitarra Acústica', 250, 'https://...')">
+        <i class="bi bi-cart-plus me-1"></i>Agregar
+    </button>
+</div>
                 </div>
             </div>
         </div>
@@ -102,7 +119,10 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                   
+                      <span class="h5 mb-0 text-success">$250.00</span>
+    <button class="btn btn-primary" onclick="agregarAlCarrito(1, 'Guitarra Acústica', 250, 'https://...')">
+        <i class="bi bi-cart-plus me-1"></i>Agregar
                 </div>
             </div>
         </div>
@@ -114,16 +134,49 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                     <span class="h5 mb-0 text-success">$250.00</span>
+    <button class="btn btn-primary" onclick="agregarAlCarrito(1, 'Guitarra Acústica', 250, 'https://...')">
+        <i class="bi bi-cart-plus me-1"></i>Agregar
                 </div>
             </div>
         </div>
-
+<div class="col-12 col-md-4">
+            <div class="card h-100">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-DZBuB1ZcyCaRqtX3OoIiAlgonczJmN9zVP7trR7i3w&s=10" class="card-img-top" alt="Producto">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                     <span class="h5 mb-0 text-success">$250.00</span>
+    <button class="btn btn-primary" onclick="agregarAlCarrito(1, 'Guitarra Acústica', 250, 'https://...')">
+        <i class="bi bi-cart-plus me-1"></i>Agregar
+                </div>
     </div>
 </div>
     </main>
 <!--ABRAHAN-->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+    <div class="offcanvas-header bg-dark text-white">
+        <h5 class="offcanvas-title" id="offcanvasCartLabel">
+            <i class="bi bi-cart3 me-2"></i>Tu Carrito de Compras
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+        <!-- Lista vacía que se llena dinámicamente con JS -->
+        <div id="cart-items-container" class="flex-grow-1 overflow-auto"></div>
 
+        <!-- Resumen de Total -->
+        <div class="border-top pt-3 mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>Total:</h5>
+                <h4 id="cart-total-price" class="text-success fw-bold">$0.00</h4>
+            </div>
+            <button class="btn btn-success w-100 py-2 mb-2" onclick="mostrarSeccion('checkout')">
+                Finalizar Compra
+            </button>
+        </div>
+    </div>
+</div>
 <footer class="bg-dark text-white pt-5 pb-4 mt-auto">
   <div class="container text-center text-md-start">
     <div class="row text-center text-md-start">
