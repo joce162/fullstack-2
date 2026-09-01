@@ -15,14 +15,15 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-    <!-- HEADER / NAVBAR (IDÉNTICO AL HOME) -->
-    <header>
+    <!-- HEADER / NAVBAR -->
+    <header class="sticky-top">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
+                <!-- TÍTULO DE LA MARCA REGRESA AL HOME -->
                 <a class="navbar-brand fw-bold text-warning fs-3" href="index.html">Sonidos Vergatarios</a>
                 
                 <div class="d-flex align-items-center order-lg-last ms-2">
-                    <!-- BOTÓN DEL CARRITO -->
+                    <!-- BOTÓN DEL CARRITO ABRE OFFCANVAS -->
                     <button class="btn btn-warning position-relative me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart">
                         <i class="bi bi-cart-fill me-1"></i> Carrito
                         <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
@@ -36,19 +37,22 @@
                 <div class="collapse navbar-collapse" id="navmenu">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
+                            <a class="nav-link text-white" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active text-warning fw-bold" href="productos.html">Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html#nosotros">Nosotros</a>
+                            <a class="nav-link text-white" href="index.html#nosotros">Nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html#blogs">Blogs</a>
+                            <a class="nav-link text-white" href="index.html#blogs">Blogs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#contacto">Contacto</a>
+                            <a class="nav-link text-white" href="index.html#faq">Preguntas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="index.html#contacto">Contacto</a>
                         </li>
                         <li class="nav-item ms-lg-3 my-2 my-lg-0">
                             <a class="btn btn-outline-warning btn-sm me-2" href="#">Iniciar Sesión</a>
@@ -181,7 +185,7 @@
 
     </main>
 
-    <!-- OFFCANVAS (CARRITO DESPLEGABLE) -->
+    <!-- OFFCANVAS (CARRITO) -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
         <div class="offcanvas-header bg-dark text-white">
             <h5 class="offcanvas-title" id="offcanvasCartLabel">
@@ -196,14 +200,14 @@
                     <h5>Total:</h5>
                     <h4 id="cart-total-price" class="text-success fw-bold">$0.00</h4>
                 </div>
-                <button class="btn btn-success w-100 py-2 mb-2" onclick="alert('Función de pago próximamente')">
+                <button class="btn btn-success w-100 py-2 mb-2" onclick="alert('¡Gracias por tu compra!')">
                     Finalizar Compra
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER (CONTACTO) -->
+    <!-- FOOTER -->
     <footer id="contacto" class="bg-dark text-white pt-5 pb-4 mt-auto">
         <div class="container text-center text-md-start">
             <div class="row">
@@ -211,14 +215,12 @@
                     <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Sonidos Vergatarios</h5>
                     <p>Los mejores equipos de sonido y car audio. Calidad, potencia y el mejor servicio para que tu música se sienta en el pecho.</p>
                 </div>
-
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contacto</h5>
                     <p><i class="bi bi-telephone-fill me-2"></i> +58 414-1234567</p>
                     <p><i class="bi bi-whatsapp me-2"></i> +58 412-7654321</p>
                     <p><i class="bi bi-envelope-fill me-2"></i> ventas@sonidosvergatarios.com</p>
                 </div>
-
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Ubicación</h5>
                     <p><i class="bi bi-geo-alt-fill me-2"></i> Maracaibo, Estado Zulia</p>
@@ -226,40 +228,38 @@
                     <p>Venezuela</p>
                 </div>
             </div>
-
             <hr class="mb-4 border-secondary">
-
             <div class="row align-items-center">
                 <div class="col-md-12 text-center">
                     <p class="mb-0">Copyright © 2026 Todos los derechos reservados por: 
-                        <a href="index.html" class="text-warning text-decoration-none">
-                            <strong>Sonidos Vergatarios</strong>
-                        </a>
+                        <a href="index.html" class="text-warning text-decoration-none"><strong>Sonidos Vergatarios</strong></a>
                     </p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- LÓGICA DEL CARRITO -->
+    <!-- SCRIPT CARRITO DE COMPRAS COMPLETO -->
     <script>
         let carrito = JSON.parse(localStorage.getItem('carrito_sonidos')) || [];
 
-        document.addEventListener('DOMContentLoaded', () => {
-            actualizarCarritoUI();
-        });
+        function guardarCarrito() {
+            localStorage.setItem('carrito_sonidos', JSON.stringify(carrito));
+            actualizarUI();
+        }
 
         function agregarAlCarrito(id, nombre, precio, imagen) {
             const index = carrito.findIndex(item => item.id === id);
-
             if (index !== -1) {
-                carrito[index].cantidad++;
+                carrito[index].cantidad += 1;
             } else {
                 carrito.push({ id, nombre, precio, imagen, cantidad: 1 });
             }
-
-            guardarYActualizar();
-            const bsOffcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasCart'));
+            guardarCarrito();
+            
+            // Abre el panel lateral del carrito al agregar un producto
+            const offcanvasElement = document.getElementById('offcanvasCart');
+            const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
             bsOffcanvas.show();
         }
 
@@ -270,65 +270,58 @@
                 if (carrito[index].cantidad <= 0) {
                     carrito.splice(index, 1);
                 }
-                guardarYActualizar();
+                guardarCarrito();
             }
         }
 
         function eliminarDelCarrito(id) {
             carrito = carrito.filter(item => item.id !== id);
-            guardarYActualizar();
+            guardarCarrito();
         }
 
-        function guardarYActualizar() {
-            localStorage.setItem('carrito_sonidos', JSON.stringify(carrito));
-            actualizarCarritoUI();
-        }
-
-        function actualizarCarritoUI() {
+        function actualizarUI() {
             const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge');
             const totalElement = document.getElementById('cart-total-price');
-            const badgeElement = document.getElementById('cart-badge');
 
-            const totalCount = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-            badgeElement.textContent = totalCount;
+            // Actualiza contador flotante
+            const totalProductos = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            if (badge) badge.textContent = totalProductos;
 
-            if (carrito.length === 0) {
-                container.innerHTML = `<p class="text-center text-muted mt-4">Tu carrito está vacío</p>`;
-                totalElement.textContent = '$0.00';
-                return;
-            }
-
-            let html = '';
-            let total = 0;
-
-            carrito.forEach(item => {
-                const subtotal = item.precio * item.cantidad;
-                total += subtotal;
-
-                html += `
-                    <div class="card mb-3 border-0 shadow-sm">
-                        <div class="card-body p-2 d-flex align-items-center">
-                            <img src="${item.imagen}" class="rounded me-2" style="width: 50px; height: 50px; object-fit: cover;">
+            // Renderiza lista del carrito
+            if (container) {
+                if (carrito.length === 0) {
+                    container.innerHTML = '<p class="text-center text-muted my-4">El carrito está vacío</p>';
+                } else {
+                    container.innerHTML = carrito.map(item => `
+                        <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                            <img src="${item.imagen}" width="50" height="50" class="rounded object-fit-cover me-2" alt="${item.nombre}">
                             <div class="flex-grow-1">
-                                <h6 class="mb-0 text-truncate" style="max-width: 120px;">${item.nombre}</h6>
-                                <small class="text-success font-weight-bold">$${item.precio.toFixed(2)}</small>
+                                <h6 class="mb-0 text-truncate" style="max-width: 130px;">${item.nombre}</h6>
+                                <small class="text-muted">$${item.precio} x ${item.cantidad}</small>
                             </div>
-                            <div class="d-flex align-items-center me-2">
+                            <div class="d-flex align-items-center">
                                 <button class="btn btn-sm btn-outline-secondary px-2" onclick="cambiarCantidad(${item.id}, -1)">-</button>
                                 <span class="mx-2 fw-bold">${item.cantidad}</span>
                                 <button class="btn btn-sm btn-outline-secondary px-2" onclick="cambiarCantidad(${item.id}, 1)">+</button>
+                                <button class="btn btn-sm btn-danger ms-2" onclick="eliminarDelCarrito(${item.id})">
+                                    <i class="bi bi-trash"></i>
+                                </button>
                             </div>
-                            <button class="btn btn-sm btn-outline-danger" onclick="eliminarDelCarrito(${item.id})">
-                                <i class="bi bi-trash"></i>
-                            </button>
                         </div>
-                    </div>
-                `;
-            });
+                    `).join('');
+                }
+            }
 
-            container.innerHTML = html;
-            totalElement.textContent = `$${total.toFixed(2)}`;
+            // Calcula el precio total
+            if (totalElement) {
+                const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+                totalElement.textContent = `$${total.toFixed(2)}`;
+            }
         }
+
+        // Carga la lista inicial al iniciar la página
+        document.addEventListener('DOMContentLoaded', actualizarUI);
     </script>
 </body>
 
