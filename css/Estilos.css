@@ -1,0 +1,28 @@
+/* css/styles.css */
+
+/* General Customizations */
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Navbar styles */
+.navbar-brand {
+    letter-spacing: 0.5px;
+}
+
+/* Card images uniform scaling */
+.card-img-top {
+    height: 220px;
+    object-fit: contain;
+    background-color: #f8f9fa;
+}
+
+/* Custom Scrollbar for Cart Offcanvas */
+#cart-items-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#cart-items-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
