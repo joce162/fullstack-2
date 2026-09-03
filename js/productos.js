@@ -1,82 +1,34 @@
-// js/productos.js
+// Catálogo extraído de tu Excel de Evaluación
+const listaProductos = [
+    { id: "GA001", categoria: "Guitarras Acústicas", nombre: "Guitarra Acústica Folk", marca: "Yamaha", modelo: "F310", precio: 129990, desc: "Tapa de abeto, aros y fondo de meranti. Ideal para iniciantes.", img: "https://via.placeholder.com/300x200?text=Yamaha+F310" },
+    { id: "GA002", categoria: "Guitarras Acústicas", nombre: "Guitarra Acústica Dreadnought", marca: "Fender", modelo: "CD-60S", precio: 189990, desc: "Tapa de abeto macizo, brazo de caoba.", img: "https://via.placeholder.com/300x200?text=Fender+CD-60S" },
+    { id: "GA003", categoria: "Guitarras Acústicas", nombre: "Guitarra Acústica Clásica 4/4", marca: "Yamaha", modelo: "C40", precio: 89990, desc: "Nailon, tapa de abeto. Ideal para estudio.", img: "https://via.placeholder.com/300x200?text=Yamaha+C40" },
+    { id: "GA004", categoria: "Guitarras Acústicas", nombre: "Guitarra Electroacústica", marca: "Takamine", modelo: "GN20CE", precio: 349990, desc: "Pickup integrado, afinador incorporado.", img: "https://via.placeholder.com/300x200?text=Takamine+GN20CE" },
+    { id: "GE001", categoria: "Guitarras Eléctricas", nombre: "Guitarra Eléctrica Stratocaster", marca: "Squier", modelo: "Affinity Strat", precio: 249990, desc: "Cuerpo de álamo, mástil de arce.", img: "https://via.placeholder.com/300x200?text=Squier+Strat" },
+    { id: "GE002", categoria: "Guitarras Eléctricas", nombre: "Guitarra Eléctrica Les Paul", marca: "Epiphone", modelo: "Les Paul Std", precio: 329990, desc: "Cuerpo caoba, tapa arce, pastillas humbucker.", img: "https://via.placeholder.com/300x200?text=Epiphone+Les+Paul" },
+    { id: "BA001", categoria: "Bajos Eléctricos", nombre: "Bajo Eléctrico 4 Cuerdas", marca: "Squier", modelo: "Affinity PJ", precio: 299990, desc: "Pickup PJ, cuerpo álamo, mástil arce.", img: "https://via.placeholder.com/300x200?text=Squier+Bajo+PJ" },
+    { id: "BA002", categoria: "Bajos Eléctricos", nombre: "Bajo Eléctrico Jazz Bass", marca: "Fender", modelo: "Player Jazz", precio: 699990, desc: "Alder body, 2 Alnico V Jazz single-coil.", img: "https://via.placeholder.com/300x200?text=Fender+Jazz+Bass" }
+];
 
-function agregarAlCarrito(id, nombre, precio, imagen) {
-    let carrito = obtenerCarrito();
-    const index = carrito.findIndex(item => item.id === id);
+document.addEventListener("DOMContentLoaded", () => {
+    const contenedor = document.getElementById("contenedor-productos");
+    if (!contenedor) return;
 
-    if (index !== -1) {
-        carrito[index].cantidad += 1;
-    } else {
-        carrito.push({ id, nombre, precio, imagen, cantidad: 1 });
-    }
-
-    guardarCarrito(carrito);
-    renderizarCarritoOffcanvas();
-
-    // Abrir automáticamente el Offcanvas del carrito al agregar
-    const offcanvasElement = document.getElementById('offcanvasCart');
-    if (offcanvasElement) {
-        const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
-        bsOffcanvas.show();
-    }
-}
-
-function cambiarCantidad(id, cambio) {
-    let carrito = obtenerCarrito();
-    const index = carrito.findIndex(item => item.id === id);
-
-    if (index !== -1) {
-        carrito[index].cantidad += cambio;
-        if (carrito[index].cantidad <= 0) {
-            carrito.splice(index, 1);
-        }
-        guardarCarrito(carrito);
-        renderizarCarritoOffcanvas();
-    }
-}
-
-function eliminarDelCarrito(id) {
-    let carrito = obtenerCarrito();
-    carrito = carrito.filter(item => item.id !== id);
-    guardarCarrito(carrito);
-    renderizarCarritoOffcanvas();
-}
-
-function renderizarCarritoOffcanvas() {
-    const container = document.getElementById('cart-items-container');
-    const totalElement = document.getElementById('cart-total-price');
-    const carrito = obtenerCarrito();
-
-    if (container) {
-        if (carrito.length === 0) {
-            container.innerHTML = '<p class="text-center text-muted my-4">El carrito está vacío</p>';
-        } else {
-            container.innerHTML = carrito.map(item => `
-                <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-                    <img src="${item.imagen}" width="50" height="50" class="rounded object-fit-cover me-2" alt="${item.nombre}">
-                    <div class="flex-grow-1">
-                        <h6 class="mb-0 text-truncate" style="max-width: 130px;">${item.nombre}</h6>
-                        <small class="text-muted">$${item.precio} x ${item.cantidad}</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-sm btn-outline-secondary px-2" onclick="cambiarCantidad(${item.id}, -1)">-</button>
-                        <span class="mx-2 fw-bold">${item.cantidad}</span>
-                        <button class="btn btn-sm btn-outline-secondary px-2" onclick="cambiarCantidad(${item.id}, 1)">+</button>
-                        <button class="btn btn-sm btn-danger ms-2" onclick="eliminarDelCarrito(${item.id})">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
+    // Genera automáticamente cada tarjeta en la página productos.html
+    contenedor.innerHTML = listaProductos.map(prod => `
+        <div class="col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="${prod.img}" class="card-img-top p-3" alt="${prod.nombre}">
+                <div class="card-body d-flex flex-column">
+                    <span class="badge bg-secondary mb-2 align-self-start">${prod.categoria}</span>
+                    <h5 class="card-title fs-6 fw-bold">${prod.nombre}</h5>
+                    <p class="card-text text-muted small">${prod.marca} - ${prod.modelo}</p>
+                    <p class="text-warning fw-bold fs-5 mt-auto">$${prod.precio.toLocaleString('cl-CL')}</p>
+                    <a href="producto-detalle.html?id=${prod.id}" class="btn btn-warning fw-bold w-100">
+                        Ver Producto
+                    </a>
                 </div>
-            `).join('');
-        }
-    }
-
-    if (totalElement) {
-        const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-        totalElement.textContent = `$${total.toFixed(2)}`;
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderizarCarritoOffcanvas();
+            </div>
+        </div>
+    `).join('');
 });
