@@ -1,30 +1,88 @@
-// js/cart.js
 
-// Obtener carrito de localStorage o inicializar vacío
+
+
 function obtenerCarrito() {
-    return JSON.parse(localStorage.getItem('carrito_sonidos')) || [];
+    return JSON.parse(localStorage.getItem("carrito_sonidos")) || [];
 }
 
-// Guardar carrito en localStorage
 function guardarCarrito(carrito) {
-    localStorage.setItem('carrito_sonidos', JSON.stringify(carrito));
-    actualizarBadges();
+    localStorage.setItem("carrito_sonidos", JSON.stringify(carrito));
+    actualizarBadgeCarrito();
 }
 
-// Actualizar el número de items en el badge de la barra de navegación
-function actualizarBadges() {
-    const carrito = obtenerCarrito();
-    const totalProductos = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-    const badges = document.querySelectorAll('#cart-badge');
+function agregarAlCarrito(idProducto, cantidad = 1) {
+    let carrito = obtenerCarrito();
+    const itemExistente = carrito.find(item => item.id === idProducto);
+
+    if (itemExistente) {
+        itemExistente.cantidad += cantidad;
+    } else {
     
-    badges.forEach(badge => {
-        if (badge) {
-            badge.textContent = totalProductos;
+        let productoInfo = (typeof productosBD !== 'undefined') 
+            ? productosBD.find(p => p.id === idProducto) 
+            : null;
+
+        if (!productoInfo && typeof listaProductos !== 'undefined') {
+            productoInfo = listaProductos.find(p => p.id === idProducto);
         }
+
+        if (productoInfo) {
+            carrito.push({
+                id: productoInfo.id,
+                nombre: productoInfo.nombre,
+                precio: productoInfo.precio,
+                imagen: productoInfo.img || 'https://via.placeholder.com/150',
+                cantidad: cantidad
+            });
+        }
+    }
+
+    guardarCarrito(carrito);
+}
+
+function actualizarCantidadCarrito(idProducto, cambio) {
+    let carrito = obtenerCarrito();
+    const item = carrito.find(p => p.id === idProducto);
+
+    if (item) {
+        item.cantidad += cambio;
+        if (item.cantidad <= 0) {
+            carrito = carrito.filter(p => p.id !== idProducto);
+        }
+    }
+
+    guardarCarrito(carrito);
+    if (typeof renderizarPaginaCarrito === "function") {
+        renderizarPaginaCarrito();
+    }
+}
+
+function eliminarDelCarrito(idProducto) {
+    let carrito = obtenerCarrito();
+    carrito = carrito.filter(p => p.id !== idProducto);
+    guardarCarrito(carrito);
+    if (typeof renderizarPaginaCarrito === "function") {
+        renderizarPaginaCarrito();
+    }
+}
+
+function vaciarCarrito() {
+    localStorage.removeItem("carrito_sonidos");
+    actualizarBadgeCarrito();
+    if (typeof renderizarPaginaCarrito === "function") {
+        renderizarPaginaCarrito();
+    }
+}
+
+function actualizarBadgeCarrito() {
+    const carrito = obtenerCarrito();
+    const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    const badges = document.querySelectorAll("#cart-badge");
+    badges.forEach(badge => {
+        badge.textContent = totalItems;
     });
 }
 
-// Al cargar cualquier página, actualizar los badges automáticamente
-document.addEventListener('DOMContentLoaded', () => {
-    actualizarBadges();
+document.addEventListener("DOMContentLoaded", () => {
+    actualizarBadgeCarrito();
 });

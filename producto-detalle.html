@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Producto | Sonidos Vergatarios</title>
+    <title>Detalle de Producto | Sonidos Vergatarios</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/styles.css">
@@ -16,118 +16,60 @@
             <div class="container">
                 <a class="navbar-brand fw-bold text-warning fs-3" href="home.html">Sonidos Vergatarios</a>
                 <div class="d-flex align-items-center order-lg-last ms-2">
-                    <a href="productos.html" class="btn btn-warning position-relative me-2">
+                    <a href="carrito.html" class="btn btn-warning position-relative me-2">
                         <i class="bi bi-cart-fill me-1"></i> Carrito
                         <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
                     </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="navmenu">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                        <li class="nav-item"><a class="nav-link text-white" href="home.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link text-white active text-warning fw-bold" href="productos.html">Productos</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="nosotros.html">Nosotros</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="contacto.html">Contacto</a></li>
-                        <li class="nav-item ms-lg-3 my-2 my-lg-0">
-                            <a class="btn btn-outline-warning btn-sm me-2" href="login.html">Iniciar Sesión</a>
-                            <a class="btn btn-warning btn-sm text-dark fw-bold" href="registro.html">Registrarse</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- DETALLE DEL PRODUCTO -->
-    <main class="container my-5" id="producto-container">
-        <!-- RUTA DENEGADA / BREADCRUMB -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="home.html" class="text-warning text-decoration-none">Home</a></li>
-                <li class="breadcrumb-item"><a href="productos.html" class="text-warning text-decoration-none">Productos</a></li>
-                <li class="breadcrumb-item active text-muted" id="bc-producto">Cargando...</li>
-            </ol>
-        </nav>
-
-        <div class="row g-4 mt-2 bg-white p-4 rounded shadow-sm" id="detalle-card">
-            <!-- Imagen e Imágenes secundarias -->
-            <div class="col-md-6">
-                <div class="border rounded p-3 text-center bg-white mb-3">
-                    <img id="prod-img-principal" src="img/placeholder.jpg" class="img-fluid rounded" style="max-height: 400px; object-fit: contain;" alt="Producto">
-                </div>
-                <div class="d-flex gap-2 justify-content-center">
-                    <img src="img/placeholder.jpg" class="img-thumbnail thumb-img cursor-pointer" style="width: 80px; height: 80px; object-fit: cover;">
-                    <img src="img/placeholder.jpg" class="img-thumbnail thumb-img cursor-pointer" style="width: 80px; height: 80px; object-fit: cover;">
-                    <img src="img/placeholder.jpg" class="img-thumbnail thumb-img cursor-pointer" style="width: 80px; height: 80px; object-fit: cover;">
-                </div>
+    <main class="container my-5">
+        <div class="row g-4 bg-white p-4 rounded shadow-sm">
+            <div class="col-md-6 text-center">
+                <img id="prod-img" src="" class="img-fluid rounded" style="max-height: 350px; object-fit: contain;">
             </div>
-
-            <!-- Información del producto -->
             <div class="col-md-6 d-flex flex-column justify-content-center">
-                <span class="badge bg-secondary w-auto align-self-start mb-2" id="prod-categoria">Categoría</span>
-                <h1 class="fw-bold display-6" id="prod-nombre">Cargando Producto...</h1>
-                <p class="text-muted mb-2">Marca: <strong id="prod-marca">---</strong> | Modelo: <strong id="prod-modelo">---</strong></p>
-                <h2 class="text-warning fw-bold my-3 fs-1" id="prod-precio">$0</h2>
+                <span class="badge bg-secondary w-auto align-self-start mb-2" id="prod-cat"></span>
+                <h2 class="fw-bold" id="prod-nombre"></h2>
+                <p class="text-muted" id="prod-specs"></p>
+                <h3 class="text-warning fw-bold my-3" id="prod-precio"></h3>
+                <p class="text-secondary" id="prod-desc"></p>
                 
-                <p class="text-secondary mb-4" id="prod-descripcion">Cargando la descripción detallada del producto...</p>
-                
-                <div class="row align-items-center mb-4">
-                    <div class="col-auto">
-                        <label for="cantidad" class="form-label fw-bold mb-0">Cantidad:</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="number" id="prod-cantidad" class="form-control text-center" value="1" min="1" max="10" style="width: 80px;">
-                    </div>
-                    <div class="col-auto">
-                        <small class="text-muted">Stock disponible: <span id="prod-stock">0</span></small>
-                    </div>
+                <div class="d-flex align-items-center gap-3 my-3">
+                    <label class="fw-bold">Cantidad:</label>
+                    <input type="number" id="prod-cantidad" class="form-control text-center" value="1" min="1" max="10" style="width: 80px;">
                 </div>
 
-                <button class="btn btn-warning btn-lg fw-bold shadow-sm py-3" id="btn-agregar-detalle">
-                    <i class="bi bi-cart-plus-fill me-2"></i> Añadir al carrito
+                <button class="btn btn-warning btn-lg fw-bold" id="btn-add-detail">
+                    <i class="bi bi-cart-plus me-2"></i> Agregar al Carrito
                 </button>
-            </div>
-        </div>
-
-        <!-- PRODUCTOS RELACIONADOS -->
-        <div class="mt-5">
-            <h3 class="fw-bold mb-4">Productos Relacionados</h3>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4" id="relacionados-container">
-                <!-- Se cargan dinámicamente -->
             </div>
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark text-white pt-5 pb-4 mt-auto">
-        <div class="container text-center text-md-start">
-            <div class="row">
-                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">
-                        <a href="home.html" class="text-warning text-decoration-none">Sonidos Vergatarios</a>
-                    </h5>
-                    <p>Los mejores equipos de sonido e instrumentos musicales.</p>
-                </div>
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contacto</h5>
-                    <p><i class="bi bi-telephone-fill me-2"></i> +58 414-1234567</p>
-                </div>
-            </div>
-            <hr class="mb-4 border-secondary">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p class="mb-0">Copyright © 2026 Todos los derechos reservados por: 
-                        <a href="home.html" class="text-warning text-decoration-none fw-bold">Sonidos Vergatarios</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/cart.js"></script>
-    <script src="js/detalle.js"></script>
+    <script src="js/productos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id") || "GA001";
+            const prod = listaProductos.find(p => p.id === id) || listaProductos[0];
+
+            document.getElementById("prod-img").src = prod.img;
+            document.getElementById("prod-cat").textContent = prod.categoria;
+            document.getElementById("prod-nombre").textContent = prod.nombre;
+            document.getElementById("prod-specs").textContent = `Marca: ${prod.marca} | Modelo: ${prod.modelo}`;
+            document.getElementById("prod-precio").textContent = `$${prod.precio.toLocaleString('cl-CL')}`;
+            document.getElementById("prod-desc").textContent = prod.desc;
+
+            document.getElementById("btn-add-detail").addEventListener("click", () => {
+                const cant = parseInt(document.getElementById("prod-cantidad").value) || 1;
+                agregarAlCarrito(prod.id, cant);
+                alert(`¡Se agregaron ${cant} unidad(es) al carrito!`);
+            });
+        });
+    </script>
 </body>
 </html>

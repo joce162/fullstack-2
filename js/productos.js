@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     contenedor.innerHTML = listaProductos.map(prod => `
         <div class="col-md-4 col-lg-3">
             <div class="card h-100 shadow-sm border-0">
-                <img src="${prod.img}" class="card-img-top p-3" alt="${prod.nombre}">
+                <a href="producto-detalle.html?id=${prod.id}">
+                    <img src="${prod.img}" class="card-img-top p-3" alt="${prod.nombre}" style="height: 200px; object-fit: contain;">
+                </a>
                 <div class="card-body d-flex flex-column">
                     <span class="badge bg-secondary mb-2 align-self-start">${prod.categoria}</span>
                     <h5 class="card-title fs-6 fw-bold">${prod.nombre}</h5>
