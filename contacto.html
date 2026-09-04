@@ -8,57 +8,57 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- CSS Propio -->
+    <link rel="stylesheet" href="css/Estilos.css">
     <title>Sonidos Vergatarios | Contacto</title>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
-  <!-- HEADER / NAVBAR -->
-<header class="sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <!-- Brand / Logo -->
-            <a class="navbar-brand fw-bold text-warning fs-3" href="home.html">Sonidos Vergatarios</a>
-            
-            <!-- AQUÍ VA EL BOTÓN DEL CARRITO QUE REDIRIGE A CARRITO.HTML -->
-            <div class="d-flex align-items-center order-lg-last ms-2">
-                <a href="carrito.html" class="btn btn-warning position-relative me-2">
-                    <i class="bi bi-cart-fill me-1"></i> Carrito
-                    <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
-                </a>
+    <!-- HEADER / NAVBAR -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <!-- Brand / Logo -->
+                <a class="navbar-brand fw-bold text-warning fs-3" href="home.html">Sonidos Vergatarios</a>
                 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
+                <!-- BOTÓN DEL CARRITO -->
+                <div class="d-flex align-items-center order-lg-last ms-2">
+                    <a href="carrito.html" class="btn btn-warning position-relative me-2">
+                        <i class="bi bi-cart-fill me-1"></i> Carrito
+                        <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                    </a>
+                    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
 
-            <!-- Menú de navegación -->
-            <div class="collapse navbar-collapse" id="navmenu">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="home.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white active text-warning fw-bold" href="productos.html">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="nosotros.html">Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="contacto.html">Contacto</a>
-                    </li>
-                    <li class="nav-item ms-lg-3 my-2 my-lg-0">
-                        <a class="btn btn-outline-warning btn-sm me-2" href="login.html">Iniciar Sesión</a>
-                        <a class="btn btn-warning btn-sm text-dark fw-bold" href="registro.html">Registrarse</a>
-                    </li>
-                </ul>
+                <!-- Menú de navegación -->
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="home.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="productos.html">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="nosotros.html">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-warning fw-bold" href="contacto.html">Contacto</a>
+                        </li>
+                        <li class="nav-item ms-lg-3 my-2 my-lg-0">
+                            <a class="btn btn-outline-warning btn-sm me-2" href="login.html">Iniciar Sesión</a>
+                            <a class="btn btn-warning btn-sm text-dark fw-bold" href="registro.html">Registrarse</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-</header>
     <main class="flex-grow-1">
 
         <section class="bg-light py-4 border-bottom">
@@ -74,23 +74,38 @@
                 <div class="col-lg-7">
                     <div class="card p-4 shadow-sm border-0">
                         <h4 class="fw-bold mb-3">Envíanos un mensaje</h4>
-                        <form onsubmit="event.preventDefault(); alert('¡Mensaje enviado con éxito!');">
+                        
+                        <!-- FORMULARIO CON VALIDACIÓN DE BOOTSTRAP (novalidate desactiva los globos feos de HTML) -->
+                        <form id="contactForm" class="needs-validation" novalidate>
                             <div class="mb-3">
                                 <label for="nombre" class="form-label fw-bold">Nombre Completo</label>
                                 <input type="text" class="form-control" id="nombre" placeholder="Ej. Juan Pérez" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa tu nombre completo.
+                                </div>
                             </div>
+
                             <div class="mb-3">
                                 <label for="correo" class="form-label fw-bold">Correo Electrónico</label>
                                 <input type="email" class="form-control" id="correo" placeholder="nombre@ejemplo.com" required>
+                                <div class="invalid-feedback">
+                                    Ingresa un correo electrónico válido.
+                                </div>
                             </div>
+
                             <div class="mb-3">
                                 <label for="mensaje" class="form-label fw-bold">Mensaje</label>
                                 <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                                <div class="invalid-feedback">
+                                    Por favor escribe un mensaje antes de enviar.
+                                </div>
                             </div>
+
                             <button type="submit" class="btn btn-warning fw-bold px-4">Enviar Mensaje</button>
                         </form>
                     </div>
                 </div>
+
                 <div class="col-lg-5">
                     <div class="card p-4 shadow-sm border-0 bg-dark text-white h-100">
                         <h4 class="fw-bold text-warning mb-4">Información Directa</h4>
@@ -109,51 +124,60 @@
 
     </main>
 
-  <!-- FOOTER -->
-<footer class="bg-dark text-white pt-5 pb-4 mt-auto">
-    <div class="container text-center text-md-start">
-        <div class="row">
-            <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
-                <!-- Nombre principal en la columna izquierda -> Dirige al Home -->
-                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">
-                    <a href="home.html" class="text-warning text-decoration-none">Sonidos Vergatarios</a>
-                </h5>
-                <p>Los mejores equipos de sonido y car audio. Calidad, potencia y el mejor servicio para que tu música se sienta en el pecho.</p>
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white pt-5 pb-4 mt-auto">
+        <div class="container text-center text-md-start">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">
+                        <a href="home.html" class="text-warning text-decoration-none">Sonidos Vergatarios</a>
+                    </h5>
+                    <p>Los mejores equipos de sonido y car audio. Calidad, potencia y el mejor servicio para que tu música se sienta en el pecho.</p>
+                </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contacto</h5>
+                    <p><i class="bi bi-telephone-fill me-2"></i> +58 414-1234567</p>
+                    <p><i class="bi bi-whatsapp me-2"></i> +58 412-7654321</p>
+                    <p><i class="bi bi-envelope-fill me-2"></i> ventas@sonidosvergatarios.com</p>
+                </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Ubicación</h5>
+                    <p><i class="bi bi-geo-alt-fill me-2"></i> Maracaibo, Estado Zulia</p>
+                    <p><i class="bi bi-signpost-2-fill me-2"></i> Av. 5 de Julio, Sector Tierra Negra</p>
+                    <p>Venezuela</p>
+                </div>
             </div>
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contacto</h5>
-                <p><i class="bi bi-telephone-fill me-2"></i> +58 414-1234567</p>
-                <p><i class="bi bi-whatsapp me-2"></i> +58 412-7654321</p>
-                <p><i class="bi bi-envelope-fill me-2"></i> ventas@sonidosvergatarios.com</p>
-            </div>
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Ubicación</h5>
-                <p><i class="bi bi-geo-alt-fill me-2"></i> Maracaibo, Estado Zulia</p>
-                <p><i class="bi bi-signpost-2-fill me-2"></i> Av. 5 de Julio, Sector Tierra Negra</p>
-                <p>Venezuela</p>
+            <hr class="mb-4 border-secondary">
+            <div class="row align-items-center">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">Copyright © 2026 Todos los derechos reservados por: 
+                        <a href="home.html" class="text-warning text-decoration-none fw-bold">Sonidos Vergatarios</a>
+                    </p>
+                </div>
             </div>
         </div>
-        <hr class="mb-4 border-secondary">
-        <div class="row align-items-center">
-            <div class="col-md-12 text-center">
-                <!-- COPYRIGHT -> DIRIGE A INDEX.HTML -->
-                <p class="mb-0">Copyright © 2026 Todos los derechos reservados por: 
-                    <a href="home.html" class="text-warning text-decoration-none fw-bold">Sonidos Vergatarios</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-    <!-- SCRIPT CONTADOR CARRITO -->
- 
-</body>
-<!-- CSS en el <head> -->
-    <link rel="stylesheet" href="css/styles.css">
-
-    <!-- Scripts en la parte inferior -->
+    <!-- Scripts Bootstrap y Locales -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/contacto.js"></script>
+    
+    <!-- Lógica sencilla de validación visual con Bootstrap -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
+            if (!this.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                event.preventDefault();
+                alert('¡Mensaje enviado con éxito!');
+                this.reset();
+                this.classList.remove('was-validated');
+                return;
+            }
+            this.classList.add('was-validated');
+        });
+    </script>
 </body>
 </html>
