@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración - SonidosVergatarios</title>
 
     <!--Proteccion de acceso-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/estilo_login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilo_login.css">
 </head>
 <body>
 
   <main class="login-wrapper">
     <div class="login-card">
-
+      <!-- Agrega esto dentro de <div class="login-card"> arriba o abajo del formulario -->
+<div class="mb-3 text-start">
+    <a href="login.html" class="text-decoration-none text-muted small fw-bold">
+        ← Volver al Login de Clientes
+    </a>
+</div>
       <div class="marca">
         <svg class="marca-logo" width="52" height="52" viewBox="0 0 64 64" fill="none" aria-hidden="true">
           <clipPath id="marcoLogin">
@@ -53,7 +58,7 @@
         <span class="marcoLogin">Administrador </span>
       </div>
 
-      <!--CORREO ELECTRONICO DE L ADMINISTRADOR-->
+      <!--CORREO ELECTRONICO DEL ADMINISTRADOR-->
       <form id="loginForm" novalidate>
         <div class="mb-3">
           <label for="correo" class="form-label">Email de Administrador</label>
@@ -68,7 +73,7 @@
             maxlength="100"
             required
           >
-          <div class="error" id="error-correo" aria-live="polite"></div>
+          <div class="error text-danger small mt-1" id="error-correo" aria-live="polite"></div>
         </div>
         
         <!--CONTRASEÑA DEL ADMINISTRADOR-->
@@ -98,13 +103,20 @@
                 <line x1="1" y1="1" x2="23" y2="23"/>
               </svg>
             </button>
-            <!--VALIDACION DE ERROR DE CLAVE-->
           </div>
-          <div class="error" id="error-password" aria-live="polite"></div>
+          <!--VALIDACION DE ERROR DE CLAVE-->
+          <div class="error text-danger small mt-1" id="error-password" aria-live="polite"></div>
         </div>
 
         <button type="submit" class="btn login-btn w-100" id="btnSubmit">
           <span class="btn-text">INICIAR SESIÓN</span>
-          <span class="spinner" hidden></span>
         </button>
       </form>
+      
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/login_admin.js"></script>
+</body>
+</html>

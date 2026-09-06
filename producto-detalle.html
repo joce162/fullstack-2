@@ -49,18 +49,22 @@
     <main class="container my-5">
         <div class="row g-4 bg-white p-4 rounded shadow-sm">
             <div class="col-md-6 text-center">
-                <img id="prod-img" src="" class="img-fluid rounded" style="max-height: 350px; object-fit: contain;">
+                <img id="prod-img" src="" class="img-fluid rounded" style="max-height: 350px; object-fit: contain;" alt="Producto">
             </div>
             <div class="col-md-6 d-flex flex-column justify-content-center">
-                <span class="badge bg-secondary w-auto align-self-start mb-2" id="prod-cat"></span>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-secondary" id="prod-cat"></span>
+                    <span class="badge bg-dark text-warning" id="prod-stock-badge">Stock: 0</span>
+                </div>
+                
                 <h2 class="fw-bold" id="prod-nombre"></h2>
-                <p class="text-muted" id="prod-specs"></p>
+                <p class="text-muted mb-1" id="prod-specs"></p>
                 <h3 class="text-warning fw-bold my-3" id="prod-precio"></h3>
                 <p class="text-secondary" id="prod-desc"></p>
                 
                 <div class="d-flex align-items-center gap-3 my-3">
-                    <label class="fw-bold">Cantidad:</label>
-                    <input type="number" id="prod-cantidad" class="form-control text-center" value="1" min="1" max="10" style="width: 80px;">
+                    <label for="prod-cantidad" class="fw-bold">Cantidad:</label>
+                    <input type="number" id="prod-cantidad" class="form-control text-center" value="1" min="1" style="width: 80px;">
                 </div>
 
                 <button class="btn btn-warning btn-lg fw-bold" id="btn-add-detail">
@@ -69,57 +73,86 @@
             </div>
         </div>
 
-        <!-- SECCIÓN DE RECOMENDACIONES -->
+        <!-- RECOMENDACIONES -->
         <section class="mt-5">
             <h4 class="fw-bold mb-4">Productos Recomendados</h4>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" id="contenedor-recomendaciones">
-                <!-- Se llena dinámicamente -->
-            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" id="contenedor-recomendaciones"></div>
         </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/cart.js"></script>
-    <script src="js/productos.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const params = new URLSearchParams(window.location.search);
             const id = params.get("id") || "GA001";
             
-            const prod = listaProductos.find(p => String(p.id) === String(id)) || listaProductos[0];
+            // Obtener base de datos local
+            const productosBD = JSON.parse(localStorage.getItem("listaProductos")) || [];
+            
+            if (productosBD.length === 0) return;
 
-            document.getElementById("prod-img").src = prod.img;
-            document.getElementById("prod-cat").textContent = prod.categoria;
+            // Buscar producto
+            const prod = productosBD.find(p => String(p.id) === String(id)) || productosBD[0];
+
+            // Renderizar elementos en pantalla
+            document.getElementById("prod-img").src = prod.img || prod.imagen || 'https://via.placeholder.com/350';
+            document.getElementById("prod-cat").textContent = prod.categoria || 'General';
             document.getElementById("prod-nombre").textContent = prod.nombre;
-            document.getElementById("prod-specs").textContent = `Marca: ${prod.marca} | Modelo: ${prod.modelo}`;
-            document.getElementById("prod-precio").textContent = `$${prod.precio.toLocaleString('cl-CL')}`;
-            document.getElementById("prod-desc").textContent = prod.desc;
+            document.getElementById("prod-specs").textContent = `Marca: ${prod.marca || 'N/A'} ${prod.modelo ? '| Modelo: ' + prod.modelo : ''}`;
+            document.getElementById("prod-precio").textContent = `$${Number(prod.precio).toLocaleString('cl-CL')}`;
+            document.getElementById("prod-desc").textContent = prod.desc || prod.descripcion || '';
 
-            document.getElementById("btn-add-detail").addEventListener("click", () => {
-                const cant = parseInt(document.getElementById("prod-cantidad").value) || 1;
+            // Gestionar estado según el Stock
+            const stockActual = Number(prod.stock) || 0;
+            const stockBadge = document.getElementById("prod-stock-badge");
+            const btnAdd = document.getElementById("btn-add-detail");
+            const inputCant = document.getElementById("prod-cantidad");
+
+            if (stockActual > 0) {
+                stockBadge.textContent = `Stock disponible: ${stockActual}`;
+                stockBadge.className = "badge bg-success";
+                inputCant.max = stockActual;
+                inputCant.disabled = false;
+                btnAdd.disabled = false;
+            } else {
+                stockBadge.textContent = "Sin Stock / Agotado";
+                stockBadge.className = "badge bg-danger";
+                inputCant.value = 0;
+                inputCant.disabled = true;
+                btnAdd.disabled = true;
+                btnAdd.className = "btn btn-secondary btn-lg fw-bold";
+                btnAdd.innerHTML = '<i class="bi bi-slash-circle me-2"></i> Sin Stock Disponible';
+            }
+
+            // Click en Agregar al Carrito
+            btnAdd.onclick = () => {
+                if (stockActual <= 0) return;
+                const cant = parseInt(inputCant.value) || 1;
+
                 if (typeof agregarAlCarrito === "function") {
                     agregarAlCarrito(prod.id, cant);
                 }
-                alert(`¡Se agregaron ${cant} unidad(es) al carrito!`);
-            });
+            };
 
-            // RENDERIZAR RECOMENDADOS CON EL NOMBRE CORREGIDO: producto-detalle.html
+            // Cargar Recomendaciones
             const contenedorRec = document.getElementById("contenedor-recomendaciones");
-            const recomendados = listaProductos.filter(p => String(p.id) !== String(prod.id)).slice(0, 4);
+            const recomendados = productosBD.filter(p => String(p.id) !== String(prod.id)).slice(0, 4);
 
+            contenedorRec.innerHTML = "";
             recomendados.forEach(item => {
                 contenedorRec.innerHTML += `
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0 p-2">
                             <a href="producto-detalle.html?id=${item.id}" class="text-decoration-none text-dark">
-                                <img src="${item.img}" class="card-img-top" style="height: 140px; object-fit: contain;" alt="${item.nombre}">
+                                <img src="${item.img || item.imagen}" class="card-img-top" style="height: 140px; object-fit: contain;" alt="${item.nombre}">
                                 <div class="card-body p-2 d-flex flex-column text-center">
                                     <h6 class="card-title text-truncate fw-bold mb-1">${item.nombre}</h6>
-                                    <span class="text-warning fw-bold mb-2">$${item.precio.toLocaleString('cl-CL')}</span>
+                                    <span class="text-warning fw-bold mb-2">$${Number(item.precio).toLocaleString('cl-CL')}</span>
                                 </div>
                             </a>
                             <div class="text-center mt-auto p-2">
-                                <a href="producto-detalle.html?id=${item.id}" class="btn btn-sm btn-outline-warning w-100">Ver producto</a>
+                                <a href="producto-detalle.html?id=${item.id}" class="btn btn-sm btn-outline-warning w-100 fw-bold">Ver producto</a>
                             </div>
                         </div>
                     </div>

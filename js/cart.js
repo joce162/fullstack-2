@@ -1,6 +1,3 @@
-
-
-
 function obtenerCarrito() {
     return JSON.parse(localStorage.getItem("carrito_sonidos")) || [];
 }
@@ -12,42 +9,59 @@ function guardarCarrito(carrito) {
 
 function agregarAlCarrito(idProducto, cantidad = 1) {
     let carrito = obtenerCarrito();
-    const itemExistente = carrito.find(item => item.id === idProducto);
+    const productosBD = JSON.parse(localStorage.getItem("listaProductos")) || [];
+    
+    // Buscar el producto en la base de datos local
+    const productoInfo = productosBD.find(p => String(p.id) === String(idProducto));
+
+    if (!productoInfo) {
+        alert("Error al intentar agregar el producto.");
+        return;
+    }
+
+    const stockMaximo = Number(productoInfo.stock) || 0;
+    const itemExistente = carrito.find(item => String(item.id) === String(idProducto));
+    const cantidadEnCarrito = itemExistente ? itemExistente.cantidad : 0;
+
+    // Control estricto de Stock
+    if (cantidadEnCarrito + cantidad > stockMaximo) {
+        alert(`No puedes agregar más unidades. El stock disponible es ${stockMaximo}.`);
+        return;
+    }
 
     if (itemExistente) {
         itemExistente.cantidad += cantidad;
     } else {
-    
-        let productoInfo = (typeof productosBD !== 'undefined') 
-            ? productosBD.find(p => p.id === idProducto) 
-            : null;
-
-        if (!productoInfo && typeof listaProductos !== 'undefined') {
-            productoInfo = listaProductos.find(p => p.id === idProducto);
-        }
-
-        if (productoInfo) {
-            carrito.push({
-                id: productoInfo.id,
-                nombre: productoInfo.nombre,
-                precio: productoInfo.precio,
-                imagen: productoInfo.img || 'https://via.placeholder.com/150',
-                cantidad: cantidad
-            });
-        }
+        carrito.push({
+            id: productoInfo.id,
+            nombre: productoInfo.nombre,
+            precio: productoInfo.precio,
+            imagen: productoInfo.img || productoInfo.imagen || 'https://via.placeholder.com/150',
+            cantidad: cantidad
+        });
     }
 
     guardarCarrito(carrito);
+    alert(`¡Se agregaron ${cantidad} unidad(es) al carrito!`);
 }
 
 function actualizarCantidadCarrito(idProducto, cambio) {
     let carrito = obtenerCarrito();
-    const item = carrito.find(p => p.id === idProducto);
+    const productosBD = JSON.parse(localStorage.getItem("listaProductos")) || [];
+    const productoInfo = productosBD.find(p => String(p.id) === String(idProducto));
+    const item = carrito.find(p => String(p.id) === String(idProducto));
 
     if (item) {
-        item.cantidad += cambio;
+        const nuevaCantidad = item.cantidad + cambio;
+        
+        if (productoInfo && nuevaCantidad > productoInfo.stock) {
+            alert(`Stock máximo alcanzado (${productoInfo.stock} disponibles).`);
+            return;
+        }
+
+        item.cantidad = nuevaCantidad;
         if (item.cantidad <= 0) {
-            carrito = carrito.filter(p => p.id !== idProducto);
+            carrito = carrito.filter(p => String(p.id) !== String(idProducto));
         }
     }
 
@@ -59,7 +73,7 @@ function actualizarCantidadCarrito(idProducto, cambio) {
 
 function eliminarDelCarrito(idProducto) {
     let carrito = obtenerCarrito();
-    carrito = carrito.filter(p => p.id !== idProducto);
+    carrito = carrito.filter(p => String(p.id) !== String(idProducto));
     guardarCarrito(carrito);
     if (typeof renderizarPaginaCarrito === "function") {
         renderizarPaginaCarrito();
@@ -81,6 +95,32 @@ function actualizarBadgeCarrito() {
     badges.forEach(badge => {
         badge.textContent = totalItems;
     });
+}
+
+function finalizarCompra() {
+    const carrito = obtenerCarrito();
+    let productosBD = JSON.parse(localStorage.getItem("listaProductos")) || [];
+
+    if (carrito.length === 0) {
+        alert("El carrito está vacío.");
+        return;
+    }
+
+    // Descontar las unidades compradas del stock global
+    carrito.forEach(itemCarrito => {
+        const prodIndex = productosBD.findIndex(p => String(p.id) === String(itemCarrito.id));
+        if (prodIndex !== -1) {
+            const nuevoStock = productosBD[prodIndex].stock - itemCarrito.cantidad;
+            productosBD[prodIndex].stock = nuevoStock < 0 ? 0 : nuevoStock;
+        }
+    });
+
+    // Guardar cambios y vaciar carrito
+    localStorage.setItem("listaProductos", JSON.stringify(productosBD));
+    vaciarCarrito();
+
+    alert("¡Compra realizada con éxito! El stock ha sido actualizado.");
+    window.location.href = "productos.html";
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -9,7 +9,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- CSS Custom -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/Estilos.css">
     <title>Sonidos Vergatarios | Productos</title>
 </head>
 
@@ -21,9 +21,9 @@
             <!-- Brand / Logo -->
             <a class="navbar-brand fw-bold text-warning fs-3" href="home.html">Sonidos Vergatarios</a>
             
-            <!-- AQUÍ VA EL BOTÓN DEL CARRITO QUE REDIRIGE A CARRITO.HTML -->
+            <!-- BOTÓN DEL CARRITO -->
             <div class="d-flex align-items-center order-lg-last ms-2">
-                <a href="carrito.html" class="btn btn-warning position-relative me-2">
+                <a href="carrito.html" class="btn btn-warning position-relative me-2 fw-bold text-dark">
                     <i class="bi bi-cart-fill me-1"></i> Carrito
                     <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
                 </a>
@@ -40,7 +40,7 @@
                         <a class="nav-link text-white" href="home.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white active text-warning fw-bold" href="productos.html">Productos</a>
+                        <a class="nav-link text-warning fw-bold active" href="productos.html">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="nosotros.html">Nosotros</a>
@@ -56,8 +56,7 @@
             </div>
         </div>
     </nav>
-
-</header>
+  </header>
 
     <main class="flex-grow-1">
 
@@ -68,10 +67,10 @@
             </div>
         </section>
 
-        <!-- SECCIÓN DE PRODUCTOS DINÁMICOS DESDE EXCEL -->
+        <!-- CONTENEDOR DINÁMICO DE PRODUCTOS -->
         <div class="container my-5">
             <div class="row g-4" id="contenedor-productos">
-                <!-- Se cargan automáticamente mediante js/productos.js -->
+                <!-- Se llenará automáticamente por js/productos.js -->
             </div>
         </div>
 
@@ -92,7 +91,7 @@
                     <h5>Total:</h5>
                     <h4 id="cart-total-price" class="text-success fw-bold">$0.00</h4>
                 </div>
-                <button class="btn btn-success w-100 py-2 mb-2" onclick="alert('¡Gracias por tu compra!')">
+                <button class="btn btn-success w-100 py-2 mb-2 fw-bold" onclick="finalizarCompra()">
                     Finalizar Compra
                 </button>
             </div>
@@ -107,7 +106,7 @@
                     <h5 class="text-uppercase mb-4 font-weight-bold text-warning">
                         <a href="home.html" class="text-warning text-decoration-none">Sonidos Vergatarios</a>
                     </h5>
-                    <p>Los mejores equipos de sonido y car audio. Calidad, potencia y el mejor servicio para que tu música se sienta en el pecho.</p>
+                    <p>Los mejores equipos de sonido e instrumentos. Calidad, potencia y el mejor servicio para tu música.</p>
                 </div>
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contacto</h5>
@@ -133,9 +132,10 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/productos.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 </html>
