@@ -3,52 +3,92 @@ document.addEventListener("DOMContentLoaded", () => {
     renderizarCatalogoTienda();
 });
 
-// Inicializa el inventario en localStorage únicamente si está completamente vacío
 function inicializarCatalogoAdmin() {
-    const listaExistente = JSON.parse(localStorage.getItem("listaProductos"));
-    if (!listaExistente || listaExistente.length === 0) {
-        const productosIniciales = [
-            {
-                id: "GA001",
-                nombre: "Guitarra Acústica Folk",
-                categoria: "Guitarras Acústicas",
-                marca: "Yamaha",
-                modelo: "F310",
-                precio: 129990,
-                stock: 2,
-                desc: "Guitarra acústica de excelente calidad de sonido.",
-                img: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=500&q=80"
-            },
-            {
-                id: "GA003",
-                nombre: "Guitarra Acústica Clásica 4/4",
-                categoria: "Guitarras Acústicas",
-                marca: "Yamaha",
-                precio: 89990,
-                stock: 1,
-                desc: "Nailon, tapa de abeto. Ideal para estudio.",
-                img: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=500&q=80"
-            },
-            {
-                id: "BE001",
-                nombre: "Bajo Eléctrico 4 Cuerdas",
-                categoria: "Bajos",
-                marca: "Ibanez",
-                precio: 219990,
-                stock: 0,
-                desc: "Bajo eléctrico activo con excelente respuesta.",
-                img: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=500&q=80"
-            }
-        ];
+    const productosIniciales = [
+        {
+            id: "GA001",
+            nombre: "Guitarra Acústica Folk",
+            categoria: "Guitarras Acústicas",
+            marca: "Yamaha",
+            modelo: "F310",
+            precio: 129990,
+            stock: 5,
+            desc: "Tapa de abeto, aros y fondo de meranti.",
+            img: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=500&q=80"
+        },
+        {
+            id: "GE001",
+            nombre: "Guitarra Eléctrica Stratocaster",
+            categoria: "Guitarras Eléctricas",
+            marca: "Fender / Squier",
+            modelo: "Bullet Strat",
+            precio: 249990,
+            stock: 8,
+            desc: "Cuerpo de álamo, mástil de arce en C y 3 cápsulas single-coil.",
+            img: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=500&q=80"
+        },
+        {
+            id: "BE001",
+            nombre: "Bajo Eléctrico 4 Cuerdas",
+            categoria: "Bajos",
+            marca: "Ibanez",
+            modelo: "GSR200",
+            precio: 219990,
+            stock: 4,
+            desc: "Bajo eléctrico activo con excelente respuesta.",
+            img: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=500&q=80"
+        },
+        {
+            id: "GA002",
+            nombre: "Guitarra Acústica Clásica 4/4",
+            categoria: "Guitarras Acústicas",
+            marca: "Yamaha",
+            modelo: "C40",
+            precio: 89990,
+            stock: 3,
+            desc: "Cuerdas de nailon, tapa de abeto. Ideal para estudio.",
+            img: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=500&q=80"
+        },
+        {
+            id: "GE002",
+            nombre: "Guitarra Eléctrica Les Paul",
+            categoria: "Guitarras Eléctricas",
+            marca: "Epiphone",
+            modelo: "Standard 60s",
+            precio: 389990,
+            stock: 6,
+            desc: "Cuerpo de caoba con tapa de arce y cápsulas Humbucker.",
+            img: "https://images.unsplash.com/photo-1550985616-10810253b84d?w=500&q=80"
+        },
+        {
+            id: "BE002",
+            nombre: "Bajo Eléctrico Jazz Bass 5 Cuerdas",
+            categoria: "Bajos",
+            marca: "Squier",
+            modelo: "Classic Vibe 70s",
+            precio: 429990,
+            stock: 2,
+            desc: "Bajo de 5 cuerdas con cápsulas alnico.",
+            img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80"
+        }
+    ];
+
+    // Forzar actualización si no hay productos o hay menos de 6
+    const listaExistente = JSON.parse(localStorage.getItem("listaProductos")) || [];
+    if (listaExistente.length < 6) {
         localStorage.setItem("listaProductos", JSON.stringify(productosIniciales));
     }
 }
 
 function renderizarCatalogoTienda() {
     const contenedor = document.getElementById("contenedor-productos");
-    if (!contenedor) return;
+    
+    // Si no encuentra el contenedor en el HTML, avisa en la consola
+    if (!contenedor) {
+        console.error("ERROR: No se encontró el elemento con id='contenedor-productos' en tu HTML.");
+        return;
+    }
 
-    // Carga siempre desde el almacenamiento local
     const productosBD = JSON.parse(localStorage.getItem("listaProductos")) || [];
 
     if (productosBD.length === 0) {
