@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const errorGeneral = document.getElementById('error-general');
   const btnRegistrar = document.getElementById('btnRegistrar');
 
-  // Comunas asociadas a cada región/sitio disponible
+ 
   const comunasPorRegion = {
     santiago: ['Santiago', 'Providencia', 'Ñuñoa', 'Las Condes', 'La Florida', 'Maipú'],
     vina: ['Viña del Mar', 'Concón', 'Quilpué', 'Villa Alemana'],
     valparaiso: ['Valparaíso', 'Casablanca', 'Quintero', 'Puchuncaví'],
   };
 
-  // Al cambiar la región, se llena la comuna con las opciones correspondientes
+ 
   regionSelect.addEventListener('change', () => {
     const region = regionSelect.value;
     const comunas = comunasPorRegion[region] || [];
@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     span.textContent = mensaje;
   }
 
-  // Revisa que un campo de texto no esté vacío
   function validarCampoVacio(input, span, mensaje) {
     if (input.value.trim() === '') {
       marcarError(input, span, mensaje);
@@ -64,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
-  // Revisa que un <select> tenga una opción elegida
+ 
   function validarSelectVacio(select, span, mensaje) {
     if (select.value === '') {
       marcarError(select, span, mensaje);
@@ -74,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
-  // Valida en tiempo real al salir de cada campo
+
   nombreInput.addEventListener('blur', () => validarCampoVacio(nombreInput, errorNombre, 'El nombre es obligatorio.'));
   correoInput.addEventListener('blur', () => validarCampoVacio(correoInput, errorCorreo, 'El correo es obligatorio.'));
   confirmarCorreoInput.addEventListener('blur', () => validarCampoVacio(confirmarCorreoInput, errorConfirmarCorreo, 'Debes confirmar el correo.'));
@@ -85,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
     errorGeneral.textContent = '';
 
-    // Se revisan todos los campos obligatorios; el teléfono queda fuera porque es opcional
+  
     const nombreValido = validarCampoVacio(nombreInput, errorNombre, 'El nombre es obligatorio.');
     const correoValido = validarCampoVacio(correoInput, errorCorreo, 'El correo es obligatorio.');
     const confirmarCorreoValido = validarCampoVacio(confirmarCorreoInput, errorConfirmarCorreo, 'Debes confirmar el correo.');
@@ -117,8 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnRegistrar.querySelector('.btn-text').textContent = 'Registrando...';
     btnRegistrar.querySelector('.spinner').hidden = false;
 
-    // Aquí luego se agregará el guardado real (por ejemplo, en un array de usuarios
-    // en localStorage, siguiendo el mismo patrón del CRUD de productos de la guía).
+    
     await new Promise(resolve => setTimeout(resolve, 900));
 
     btnRegistrar.disabled = false;

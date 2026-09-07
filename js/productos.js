@@ -14,7 +14,7 @@ function inicializarCatalogoAdmin() {
             precio: 129990,
             stock: 5,
             desc: "Tapa de abeto, aros y fondo de meranti.",
-            img: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=500&q=80"
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7psVx0JqDxN1FKRbEQtECoEiFQeUAWLbhJtgpEAhQ-A&s"
         },
         {
             id: "GE001",
@@ -25,7 +25,7 @@ function inicializarCatalogoAdmin() {
             precio: 249990,
             stock: 8,
             desc: "Cuerpo de álamo, mástil de arce en C y 3 cápsulas single-coil.",
-            img: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?w=500&q=80"
+            img: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTZ-U3LBwT79j-xK146Z35pWLvBWFlUoXniOzVN0MqN3qBFJoyW9IP-p09fkSIDYPDqsXhoz0rG5rMSZNrzVWUfcj4x2DUcvPijUxKd1Yk1SqkQZitGWwokDA"
         },
         {
             id: "BE001",
@@ -36,7 +36,7 @@ function inicializarCatalogoAdmin() {
             precio: 219990,
             stock: 4,
             desc: "Bajo eléctrico activo con excelente respuesta.",
-            img: "https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=500&q=80"
+            img: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSxufvLS_RMkflcy8LPvHQ2nr7UIfVd1RUUl2J4F3zq3_g9oOaEXuXsx8sXNqN-2AwgVhI5ULgZcekIzkNTP_sPKAYAc4_v"
         },
         {
             id: "GA002",
@@ -47,7 +47,7 @@ function inicializarCatalogoAdmin() {
             precio: 89990,
             stock: 3,
             desc: "Cuerdas de nailon, tapa de abeto. Ideal para estudio.",
-            img: "https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=500&q=80"
+            img: "https://i5.walmartimages.cl/asr/46ddc09e-2e2a-49bc-92bb-17d94211e228.8cc53d9167db48aa2df7de90365df567.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
         },
         {
             id: "GE002",
@@ -58,7 +58,7 @@ function inicializarCatalogoAdmin() {
             precio: 389990,
             stock: 6,
             desc: "Cuerpo de caoba con tapa de arce y cápsulas Humbucker.",
-            img: "https://images.unsplash.com/photo-1550985616-10810253b84d?w=500&q=80"
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCROIjcyoYghhK9n3zb9KQJrC-BS0ahz0lnPCaH8ViqA&s=10"
         },
         {
             id: "BE002",
@@ -69,7 +69,7 @@ function inicializarCatalogoAdmin() {
             precio: 429990,
             stock: 2,
             desc: "Bajo de 5 cuerdas con cápsulas alnico.",
-            img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80"
+            img: "https://www.fender.cl/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/b/1/b186_0374550506v1.jpg"
         }
     ];
 
